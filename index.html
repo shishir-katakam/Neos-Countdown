@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Neos Countdown</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap');
+
+    body {
+      margin: 0;
+      font-family: 'Orbitron', sans-serif;
+      background-color: #121212;
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      flex-direction: column;
+    }
+
+    .container {
+      text-align: center;
+      padding: 20px;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      color: #00ffcc;
+    }
+
+    .subtext {
+      color: #888;
+      font-size: 1.2rem;
+      margin-bottom: 30px;
+    }
+
+    #countdown {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+    }
+
+    .time-box {
+      background: #1e1e1e;
+      border: 1px solid #00ffcc;
+      border-radius: 10px;
+      padding: 20px 25px;
+      min-width: 90px;
+      transition: all 0.3s ease-in-out;
+    }
+
+    .time-box:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 10px #00ffcc33;
+    }
+
+    .time-box span {
+      display: block;
+      font-size: 2rem;
+      color: #00ffcc;
+    }
+
+    .time-box label {
+      font-size: 0.9rem;
+      color: #ccc;
+    }
+
+    @media (max-width: 600px) {
+      .time-box {
+        padding: 15px 20px;
+        min-width: 70px;
+      }
+
+      h1 {
+        font-size: 2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>⏳ Neos Launch Countdown</h1>
+    <p class="subtext">Until April 2, 2027</p>
+    <div id="countdown">
+      <div class="time-box"><span id="years">0</span><label>Years</label></div>
+      <div class="time-box"><span id="months">0</span><label>Months</label></div>
+      <div class="time-box"><span id="days">0</span><label>Days</label></div>
+      <div class="time-box"><span id="hours">0</span><label>Hours</label></div>
+      <div class="time-box"><span id="minutes">0</span><label>Minutes</label></div>
+      <div class="time-box"><span id="seconds">0</span><label>Seconds</label></div>
+    </div>
+  </div>
+
+  <script>
+    const targetDate = new Date("2027-04-02T00:00:00");
+
+    function updateCountdown() {
+      const now = new Date();
+      let diff = targetDate - now;
+
+      if (diff <= 0) {
+        document.getElementById("countdown").innerHTML = "🚀 Neos has launched!";
+        return;
+      }
+
+      let seconds = Math.floor(diff / 1000) % 60;
+      let minutes = Math.floor(diff / 1000 / 60) % 60;
+      let hours = Math.floor(diff / 1000 / 60 / 60) % 24;
+      let days = Math.floor(diff / 1000 / 60 / 60 / 24);
+
+      // Rough approximation
+      let years = Math.floor(days / 365);
+      days %= 365;
+      let months = Math.floor(days / 30);
+      days %= 30;
+
+      document.getElementById("years").textContent = years;
+      document.getElementById("months").textContent = months;
+      document.getElementById("days").textContent = days;
+      document.getElementById("hours").textContent = hours;
+      document.getElementById("minutes").textContent = minutes;
+      document.getElementById("seconds").textContent = seconds;
+    }
+
+    updateCountdown(); // First run
+    setInterval(updateCountdown, 1000); // Update every second
+  </script>
+</body>
+</html>
